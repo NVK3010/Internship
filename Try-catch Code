@@ -1,0 +1,22 @@
+
+
+class DemoResource implements AutoCloseable {
+    @Override
+    public void close() throws Exception {
+        throw new RuntimeException("Close method not implemented");
+    }
+}
+public class Demo {
+
+    public static void main(String[] args) {
+        try (DemoResource demo = new DemoResource()) {
+            throw new RuntimeException("Try Block Exception");
+            // Use the demo object
+        } catch (Exception e) {
+            System.out.println("Primary exception: " + e);
+            for (Throwable suppressed : e.getSuppressed()) {
+                System.out.println("Suppressed exception: " + suppressed);
+            }
+        }
+    }
+}
