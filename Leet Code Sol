@@ -1,0 +1,48 @@
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
+class Solution {
+    public int maxEvents(int[][] events) {
+        // Sort events by their start day.
+        // This helps us process events in chronological order.
+        Arrays.sort(events, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int n = events.length;
+        int attendedEvents = 0;
+        int eventIdx = 0;
+
+        // Min-heap to store the end days of events that are currently available to attend.
+        // We use a min-heap because we want to prioritize attending events that end soonest
+        // to free up days for other events.
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        // Iterate through all possible days. The maximum end day is 10^5, so we iterate up to that.
+        // We start from day 1 as days are 1-indexed.
+        int day = 1;
+        int maxDay = 100001; // Constraints state endDayi <= 10^5
+
+        while (day <= maxDay && (eventIdx < n || !minHeap.isEmpty())) {
+            // Add all events that start on or before the current 'day' to the min-heap.
+            while (eventIdx < n && events[eventIdx][0] <= day) {
+                minHeap.offer(events[eventIdx][1]); // Push end_day onto the heap
+                eventIdx++;
+            }
+
+            // Remove events from the min-heap that have already ended before the current 'day'.
+            while (!minHeap.isEmpty() && minHeap.peek() < day) {
+                minHeap.poll();
+            }
+
+            // If there are events available to attend on the current 'day' (i.e., minHeap is not empty),
+            // attend the event that ends earliest (which is at the top of the min-heap).
+            if (!minHeap.isEmpty()) {
+                minHeap.poll(); // Attend this event
+                attendedEvents++;
+            }
+
+            day++;
+        }
+
+        return attendedEvents;
+    }
+}
