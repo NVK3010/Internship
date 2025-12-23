@@ -1,0 +1,24 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class GFG {
+    static void convertUppercase(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        for(int i = 0; i<s.length();i++){
+            int ascii = s.charAt(i);
+            if(ascii>96){
+                sb.append((char) (ascii-32));
+            }
+            else
+                sb.append((char) (ascii));
+        }
+        System.out.println(sb);
+    }
+    public static void main(String[] args) {
+        convertUppercase(" Venkatesh");
+
+    }
+
+}
+
