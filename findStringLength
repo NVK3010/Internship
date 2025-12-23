@@ -1,0 +1,18 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class GFG {
+    static void findStringLength(String s) {
+        int count = 0;
+        char[] chr = s.toCharArray();
+        for(char c:chr)
+            count++;
+        System.out.println(count);
+    }
+    public static void main(String[] args) {
+        findStringLength("Venkatesh");
+    }
+    
+}
+
